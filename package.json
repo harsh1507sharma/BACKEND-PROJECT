@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "A PROJECT USING BACKEND",
-  "types": "module",
+  "type": "module",
   "keywords": [
     "JAVASCRIPT",
     "BACKEND",
@@ -10,13 +10,21 @@
   ],
   "license": "ISC",
   "author": "HARSH SHARMA",
-  "type": "commonjs",
-  "main": "index.js",
+ 
+  "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js"
   },
   "devDependencies": {
     "nodemon": "^3.1.11",
     "prettier": "^3.7.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.0.2"
   }
 }
+
+
+
