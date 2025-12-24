@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
         type: String,// cloudnary url
         required : true,
     },
+     coverimage : {
+        type: String,// cloudnary url
+       
+    },
       fullname :{
         type : String
     },
