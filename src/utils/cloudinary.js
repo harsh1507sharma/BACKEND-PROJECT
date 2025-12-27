@@ -1,31 +1,46 @@
-import { v2 as cloudinary } from 'cloudinary'
-import fs from 'fs'
 
-cloudinary.config({
+
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
+
+
+// 🔥 FORCE Cloudinary to ignore any hidden URL
+delete process.env.CLOUDINARY_URL;
+console.log("🔥 Cloudinary Config:", {
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY ,
-  api_secret: process.env.CLOUDINARY_API_SECRET 
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+cloudinary.config({
+  cloud_name: String(process.env.CLOUDINARY_CLOUD_NAME),
+  api_key: String(process.env.CLOUDINARY_API_KEY),
+  api_secret: String(process.env.CLOUDINARY_API_SECRET),
+});
 
-const uploadToCloudinary = async (LocalfilePath) =>{
-    try {
-        if(!LocalfilePath) return null;
-        //uploading file to cloudinary
-        const response = await cloudinary.uploader.upload(LocalfilePath,{
-            resource_type: "auto",
-        })
+const uploadToCloudinary = async (localFilePath) => {
+  try {
+    if (!localFilePath) return null;
 
-        //file uploaded successfully
-        console.log("file is uploaded on cloudinary",response.secure_url);
-        return response
+    const resolvedPath = path.resolve(localFilePath);
 
-    } catch (error) {
-        fs.unlinkSync(LocalfilePath); // remove file from local uploads folder as file upload operation failed
-        return null
+    const response = await cloudinary.uploader.upload(resolvedPath, {
+      resource_type: "image",
+    });
+
+    if (fs.existsSync(resolvedPath)) {
+      fs.unlinkSync(resolvedPath);
     }
-}
 
+    console.log("✅ Uploaded to Cloudinary:", response.secure_url);
+    return response;
+  } catch (error) {
+    console.error("🔥 FINAL Cloudinary error:", error);
+    return null;
+  }
+};
 
-export {uploadToCloudinary};
-    
+export { uploadToCloudinary };

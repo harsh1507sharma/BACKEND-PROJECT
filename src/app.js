@@ -18,11 +18,11 @@ app.use(cookieParser())
 
 
 // ROUTES IMPORTS
-import userRouter from "./routes/user.routes.js"    
+import userRoutes from "./routes/user.routes.js"    
 
 
 // ROUTES declaration
-app.use("/api/v1/users",userRouter)
+app.use("/api/v1/users",userRoutes)
 
 // https://localhost:8000/api/v1/users/register
 export default app
