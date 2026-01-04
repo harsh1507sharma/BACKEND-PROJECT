@@ -356,7 +356,7 @@ const useraccountcontroller = asynchandler(async (req, res) => {
             subscriberscount: { $size: "$subscribers" },
             subscriptionscount: { $size: "$subscriptions" },
             isSubscribed: {
-                $condition: {
+                $cond: {
                     if: { $in: [req.user._id, "$subscribers.subscriber"] },
                     then: true,
                     else: false
@@ -382,13 +382,13 @@ const useraccountcontroller = asynchandler(async (req, res) => {
 
     ])
 
-    if (!channel?.length) {
+    if (!channel.length) {
         throw new ApiError(404, "channel does not exist ")
     }
 
     return res
         .status(200)
-        .json(new ApiResponse(200, new channel[0], "user channel fetched successfully"))
+        .json(new ApiResponse(200,channel[0], "user channel fetched successfully"))
 
 
 
