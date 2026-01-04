@@ -463,5 +463,6 @@ export {
     updateaccountdeatail,
     avatarupdate,
     coverimageupdate,
+    useraccountcontroller,
     getwatchhistory
 }
